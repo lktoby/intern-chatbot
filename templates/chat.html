@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>学習支援アプリ - チャット</title>
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <h1>{{ choice }}</h1>
+    <div>
+        <p id="ai-content">a</p>
+    </div>
+    <div>
+        <form id='choice-form' method='post' action='/chat'>
+            <input type='radio' value='1'>1<br>
+            <input type='radio' value='2'>2<br>
+            <input type='radio' value='3'>3<br>
+            <input type='radio' value='4'>4<br>
+            <input type='radio' value='5'>5<br>
+            <input type='submit' value='send'>
+    </div>
+    <div>
+        <button id="next-button">next</button>
+        <button id="end-button">end</button>
+    </div>
+    <div>
+        <p id="ai-result">a</p>
+    </div>
+</body>
+</html>

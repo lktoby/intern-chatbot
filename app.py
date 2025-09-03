@@ -28,15 +28,21 @@ def start():
     level_key = request.form['level']
     genre = backend.GENRE[genre_key]
     level = backend.LEVEL[level_key]
-    return render_template(
+    """ return render_template(
         "index.html",
         message="学習アシスタントへようこそ！",
         select_title="ジャンルとレベルを選択",
-        choice=f"{genre}の{level}を選択しました。問題を出します。",
+        choice=f"{genre}の{level}を選択しました",
         GENRE=backend.GENRE,
         LEVEL=backend.LEVEL,
     )
-    # return jsonify({'message': f'{genre}の{level}を選択しました。問題を出します。'})
+    """
+    system_prompt = backend.SYSTEM_PROMPT.format(GENRE=genre, LEVEL=level)
+    backend.messages.clear()
+    backend.messages.append({"role": "system", "content": system_prompt})
+    return render_template("chat.html", 
+                           choice=f"{genre}の{level}を選択しました")
+
 
 # サーバーを開始
 if __name__ == '__main__':
