@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 document.getElementById('message').textContent = data.message;
+                document.getElementById('select-title').textContent = data.select_title;
             })
-            .catch(error => console.error('エラー:', error));
+            .catch(error => console.error('error:', error));
     });
 });

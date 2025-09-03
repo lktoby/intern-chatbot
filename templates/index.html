@@ -3,11 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>hello world app</title>
+        <title>学習アシスタントアプリ</title>
     </head>
     <body>
         <h1 id='message'>{{ message }}</h1>
-        <button id='translate-button'>日本語</button>
+        <button id='translate-button'>english</button>
+
+        <div>
+            <h2 id='select-title'>{{ select_title }}</h2>
+            <form id="select-form" method='post' action='/start'>
+                {% for key, value in GENRE.items() %}
+                <input type="radio" name='genre' value="{{ key }}"> {{ value }}
+                {% endfor %}
+                <br>
+                {% for key, value in LEVEL.items() %}
+                <input type="radio" name="level" value="{{ key }}"> {{ value }}
+                {% endfor %}
+                <br>
+                <input type="submit" value="start">
+            </form>
+            <p id="choice">{{ choice }}</p>
+        </div>
+
         <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>
