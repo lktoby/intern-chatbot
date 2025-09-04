@@ -12,7 +12,9 @@ def hello_world():
                            message='学習アシスタントへようこそ！',
                            select_title='ジャンルとレベルを選択',
                            GENRE=backend.GENRE,
-                           LEVEL=backend.LEVEL)
+                           LEVEL=backend.LEVEL,
+                           genre_name='ジャンル',
+                           level_name='レベル')
 
 # 翻訳
 @app.route('/translate')

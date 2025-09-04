@@ -10,4 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('error:', error));
     });
+
+    const form = document.getElementById('select-form');
+    form.addEventListener('submit', function (event) {
+        const genreChecked = document.querySelector('input[name="genre"]:checked');
+        const levelChecked = document.querySelector('input[name="level"]:checked');
+        if (!genreChecked || !levelChecked) {
+            event.preventDefault();
+            const choice = document.getElementById('choice');
+            choice.textContent = 'ジャンルとレベルの両方を選択してください。';
+        }
+    });
 });

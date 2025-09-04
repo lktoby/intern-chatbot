@@ -14,7 +14,17 @@ h1 {
 button {
     background-color: orange;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    background-color: orange;
+    color: white;
+    padding: 5px 20px;
     border: none;
     border-radius: 5px;
     font-size: 1.2em;
@@ -26,7 +36,5 @@ button:hover {
 }
 
 #message {
-    margin-top: 20px;
-    font-size: 1.1em;
     color: green;
 }

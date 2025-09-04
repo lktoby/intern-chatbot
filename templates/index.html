@@ -14,10 +14,12 @@
         <div>
             <h2 id='select-title'>{{ select_title }}</h2>
             <form id="select-form" method='post' action='/start'>
+                {{ genre_name }} <br>
                 {% for key, value in GENRE.items() %}
                 <input type="radio" name='genre' value="{{ key }}"> {{ value }}
                 {% endfor %}
                 <br>
+                {{ level_name }} <br>
                 {% for key, value in LEVEL.items() %}
                 <input type="radio" name="level" value="{{ key }}"> {{ value }}
                 {% endfor %}
