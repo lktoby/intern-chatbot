@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>学習支援アプリ - チャット</title>
+    <link rel="stylesheet" href="/static/style.css">
     <script src="/static/script.js" defer></script>
 </head>
 <body>
     <h1>{{ choice }}</h1>
     <div>
-        <p id="ai-content">a</p>
+        <p id="ai-content">{{ question }}</p>
     </div>
     <div>
-        <form id='choice-form' method='post' action='/chat'>
-            <input type='radio' value='1'>1<br>
-            <input type='radio' value='2'>2<br>
-            <input type='radio' value='3'>3<br>
-            <input type='radio' value='4'>4<br>
-            <input type='radio' value='5'>5<br>
-            <input type='submit' value='send'>
+        <form id='choice-form' method='post'>
+            <input type='radio' name='choices' value='1'>1<br>
+            <input type='radio' name='choices' value='2'>2<br>
+            <input type='radio' name='choices' value='3'>3<br>
+            <input type='radio' name='choices' value='4'>4<br>
+            <input type='radio' name='choices' value='5'>5<br>
+            <input type="submit" value='send'>
+        </form>
     </div>
     <div>
         <button id="next-button">next</button>
         <button id="end-button">end</button>
     </div>
     <div>
-        <p id="ai-result">a</p>
+        <p id="ai-result"></p>
+        <button id="back-button" onclick="location.href='/'">back</button>
     </div>
 </body>
 </html>
