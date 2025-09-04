@@ -3,6 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBtn = document.getElementById('next-button');
     const endBtn = document.getElementById('end-button');
 
+    const aiContent = document.getElementById('ai-content');
+    try {
+        const obj = JSON.parse(aiContent.textContent);
+        aiContent.textContent = obj.question;
+    } catch (e) {
+        console.log(e)
+    }
+
     function sendMessage(text) {
         console.log('Sending message:', text);
         const response = fetch('/api/message', {
@@ -14,12 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => { 
+                // 例: AIの返答がJSON文字列の場合
+                const jsonString = data.reply; // 例: '{"type":"question","question":"問題文","choices":["A","B","C","D","E"],"answer":"1"}'
+                const obj = JSON.parse(jsonString);
+                const questionText = obj.question;
                 if (text === 'next') {
                     const next_question = document.getElementById('ai-content');
-                    next_question.textContent = data.reply;
+                    next_question.textContent = questionText;
                 } else {
                     const result = document.getElementById('ai-result');
-                    result.textContent = data.reply;
+                    result.textContent = questionText;
                 }
             });
     }
@@ -38,5 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const result = document.getElementById('ai-result');
         result.textContent = '';
     });
-        endBtn.addEventListener('click', () => sendMessage('end'));
+    endBtn.addEventListener('click', () => sendMessage('end'));
+    
 });
