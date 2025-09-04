@@ -20,7 +20,11 @@ def hello_world():
 @app.route('/translate')
 def translate():
     return jsonify({'message': 'Welcome to your learning assistant!',
-                    'select_title': 'Select genre and level below'})
+                    'select_title': 'Select genre and level below',
+                    'GENRE': backend.GENRE_EN,
+                    'LEVEL': backend.LEVEL_EN,
+                    'genre_name': 'Genre',
+                    'level_name': 'Level',})
 
 
 # 学習開始

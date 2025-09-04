@@ -2,7 +2,9 @@ import os
 from openai import OpenAI
 
 GENRE = {'1': '数学', '2': '英語', '3': '理科', '4': 'IT全般', '5': 'AI（人工知能）', '6': 'Python'}
+GENRE_EN = {'1': 'Math', '2': 'English', '3': 'Science', '4': 'IT', '5': 'AI', '6': 'Python'}
 LEVEL = {'1': '初心者（小学生レベル）', '2': '中級者（中学生レベル）', '3': '上級者（高校～大学レベル）'}
+LEVEL_EN = {'1': 'Beginner', '2': 'Intermediate', '3': 'Advanced'}
 
 SYSTEM_PROMPT = """
 問題を出し回答の結果を評価せよ
