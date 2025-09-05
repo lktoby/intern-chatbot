@@ -3,32 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="static/style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <title>学習アシスタントアプリ</title>
     </head>
     <body>
         <h1 id='message'>{{ message }}</h1>
-        <button id='translate-button'>english</button>
-
         <div>
             <h2 id='select-title'>{{ select_title }}</h2>
             <form id="select-form" method='post' action='/start'>
-                <p id="genre-name">{{ genre_name }} </p>
+                <p id="genre-name" class="names">{{ genre_name }} </p>
                 {% for key, value in GENRE.items() %}
                 <input type="radio" name='genre' value="{{ key }}"> {{ value }} 
                 {% endfor %}
                 <br>
-                <p id="level-name"> {{ level_name }} </p>
+                <p id="level-name"class="names"> {{ level_name }} </p>
                 {% for key, value in LEVEL.items() %}
                 <input type="radio" name="level" value="{{ key }}"> {{ value }} 
                 {% endfor %}
                 <br>
                 <input type="submit" value="start">
+                <button id='reset-button' type="reset">クリア</button>
+                <button id='translate-button' type="button">english</button>
             </form>
             <p id="choice">{{ choice }}</p>
         </div>
-
         <script src="{{ url_for('static', filename='index.js') }}"></script>
     </body>
 </html>

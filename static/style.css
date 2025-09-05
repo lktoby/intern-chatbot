@@ -11,6 +11,17 @@ h1 {
     font-size: 2em;
 }
 
+h2 {
+    color: darkgreen;
+    font-size: 1.5em;
+}
+
+.names {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
 button {
     background-color: orange;
     color: white;
@@ -37,4 +48,8 @@ button:hover {
 
 #message {
     color: green;
+    font-weight: bolder;
+    padding: 5px 10px;
+    border: 2px solid green;
+    border-radius: 5px;
 }

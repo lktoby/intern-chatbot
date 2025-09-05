@@ -27,6 +27,19 @@ def translate():
                     'level_name': 'Level',})
 
 
+@app.route("/translate_ja")
+def translate_ja():
+    return jsonify(
+        {"message": "学習アシスタントへようこそ！",
+         "select_title": "ジャンルとレベルを選択",
+         "genre_name": "ジャンル",
+         "level_name": "レベル",
+         "GENRE": backend.GENRE,
+         "LEVEL": backend.LEVEL,
+        }
+    )
+
+
 # 学習開始
 @app.route('/start', methods=['POST'])
 def start():
