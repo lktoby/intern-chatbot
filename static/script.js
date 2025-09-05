@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+    function formatCodeSnippets(text) {
+        // 3つのバッククォート（コードブロック）
+        text = text.replace(/```(?:\w+)?\n?([\s\S]*?)```/g, function(match, code) {
+            return '<pre><code>' + code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code></pre>';
+        });
+        // 1つのバッククォート（インラインコード）
+        text = text.replace(/`([^`]+?)`/g, function(match, code) {
+            return '<code>' + code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code>';
+        });
+        return text;
+    }
+
     const form = document.getElementById('choice-form');
     const nextBtn = document.getElementById('next-button');
     const endBtn = document.getElementById('end-button');
@@ -9,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     try {
         const obj = JSON.parse(aiContent.textContent);
-        aiContent.textContent = obj.question;
+        aiContent.innerHTML = formatCodeSnippets(obj.question);
         renderChoices(obj.choices);
     } catch (e) {
         console.log(e)
@@ -31,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const obj = JSON.parse(jsonString);
                     const questionText = obj.question;
                     const next_question = document.getElementById('ai-content');
-                    next_question.innerHTML = questionText;
+                    next_question.innerHTML = formatCodeSnippets(questionText);
                     if (window.MathJax) {
                         MathJax.typeset();
                     }
@@ -46,18 +58,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     const improvements = obj.improvements;
                     const advice = obj.advice;
                     const end = document.getElementById('ai-content');
-                    end.textContent = `正答率：${accuracy} 正解数：${correct_answers} 総問題数：${total_questions}\n
-                    総合評価：${overall_evaluation}\n
-                    良い点：${strengths}\n
-                    改善点：${improvements}\n
+                    let summaryText = `正答率：${accuracy} <br>
+                    正解数：${correct_answers} <br>
+                    総問題数：${total_questions}<br>
+                    総合評価：${overall_evaluation}<br>
+                    良い点：${strengths}<br>
+                    改善点：${improvements}<br>
                     学習のアドバイス：${advice}`;
-                    end.innerHTML = end.textContent.replace(/\n/g, '<br>');
+                    end.innerHTML = formatCodeSnippets(summaryText);
                     const form = document.getElementById('choice-form');
                     form.innerHTML = '';
                     const result = document.getElementById('ai-result');
                     result.innerHTML = '';
                     const buttons = document.getElementById('buttons');
-                    buttons.innerHTML = '';
+                    buttons.innerHTML = '<button id="back-button" onclick="location.href=\'/\'">back</button>';
                 }
                 else {
                 const obj = JSON.parse(data.reply);
@@ -65,8 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const explanation = obj.explanation;
                 console.log('Received response:', resultText, explanation);
                 const result = document.getElementById('ai-result');
-                result.textContent = resultText + "\n" + explanation;
-                result.innerHTML = result.textContent.replace(/\n/g, '<br>');
+                const formatted = resultText
+                    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+                result.innerHTML = `<h4 style="color:darkgreen; font-weight:bold">${formatCodeSnippets(formatted)}</h4><br>${formatCodeSnippets(explanation)}`;
                 if (window.MathJax) {
                     MathJax.typeset();  
                 }
@@ -85,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
             radio.id = `choice${idx + 1}`;
             const label = document.createElement('label');
             label.htmlFor = radio.id;
-            label.textContent = ` ${typeof choice === 'object' ? JSON.stringify(choice) : String(choice)}`;
+            const choiceText = typeof choice === 'object' ? Object.values(choice)[0] : String(choice);
+            label.innerHTML = ' ' + formatCodeSnippets(choiceText);
             console.log('Rendering choice:', typeof choice === 'object' ? JSON.stringify(choice) : choice);
             form.appendChild(radio);
             form.appendChild(label);
@@ -95,19 +111,29 @@ document.addEventListener('DOMContentLoaded', function () {
         submit.type = 'submit';
         submit.value = 'send';
         form.appendChild(submit);
-}
+    }
 
     form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const input = document.querySelector('input[name="choices"]:checked').value;
-            if (input) {
-                sendMessage(input);
-            }
-            const radios = document.querySelectorAll('input[name="choices"]');
-            radios.forEach(radio => radio.checked = false);
+        event.preventDefault();
+        const selected = document.querySelector('input[name="choices"]:checked');
+        const errorMsg = document.getElementById('choice-error');
+        if (errorMsg) errorMsg.remove();
+        if (selected) {
+            sendMessage(selected.value);
+        } else {
+            // エラーメッセージを表示
+            const formParent = form.parentNode;
+            const error = document.createElement('p');
+            error.id = 'choice-error';
+            error.style.color = 'red';
+            error.textContent = '選択肢を選んでください。';
+            formParent.insertBefore(error, form.nextSibling);
+        }
         });
     nextBtn.addEventListener('click', function (event) {
         sendMessage('next');
+        const radios = document.querySelectorAll('input[name="choices"]');
+        radios.forEach(radio => radio.checked = false);
         const result = document.getElementById('ai-result');
         result.textContent = '';
     });

@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             const choice = document.getElementById('choice');
             choice.textContent = isEnglish
-            ? 'ジャンルとレベルを両方選択してください。'
-            : 'Please select both genre and level.';
+            ? 'Please select both genre and level.'
+            : 'ジャンルとレベルを両方選択してください。';
         }
     });
 
