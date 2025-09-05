@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
             radio.id = `choice${idx + 1}`;
             const label = document.createElement('label');
             label.htmlFor = radio.id;
-            label.textContent = ` ${choice}`;
-            console.log('Rendering choice:', choice);
+            label.textContent = ` ${typeof choice === 'object' ? JSON.stringify(choice) : String(choice)}`;
+            console.log('Rendering choice:', typeof choice === 'object' ? JSON.stringify(choice) : choice);
             form.appendChild(radio);
             form.appendChild(label);
             form.appendChild(document.createElement('br'));
