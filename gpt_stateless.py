@@ -1,5 +1,7 @@
 import os
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
 def chat_once(message: str) -> str:
     openai_api_key = os.getenv("OPENAI_API_KEY")

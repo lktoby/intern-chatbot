@@ -1,5 +1,7 @@
 import os
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
 GENRE = {'1': '数学', '2': '英語', '3': '理科', '4': 'IT全般', '5': 'AI（人工知能）', '6': 'Python'}
 GENRE_EN = {'1': 'Math', '2': 'English', '3': 'Science', '4': 'IT', '5': 'AI', '6': 'Python'}

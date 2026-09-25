@@ -1,5 +1,7 @@
 import os
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
 system_prompt = """
 あなたは小学校の理科教師です。私の質問に答えてください。
